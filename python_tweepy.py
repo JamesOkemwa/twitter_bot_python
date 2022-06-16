@@ -9,14 +9,21 @@ bearer_token = config("BEARER_TOKEN")
 
 client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token, access_token_secret)
 
+auth = tweepy.OAuth1UserHandler(consumer_key, consumer_secret, access_token, access_token_secret)
+api = tweepy.API(auth)
+
 # first tweet
 # client.create_tweet(text="Hello Twitter")
 
 # like a tweet
-client.like(1537429257869090817)
+# client.like(1537429257869090817)
 
 # retweet tweet
-client.retweet(1537429257869090817)
+# client.retweet(1537429257869090817)
 
 # reply to a tweet
-client.create_tweet(in_reply_to_tweet_id=1537429257869090817, text="Hello user")
+# client.create_tweet(in_reply_to_tweet_id=1537429257869090817, text="Hello user")
+
+# home timeline tweets
+for tweet in api.home_timeline():
+    print(tweet.text)
