@@ -25,5 +25,10 @@ api = tweepy.API(auth)
 # client.create_tweet(in_reply_to_tweet_id=1537429257869090817, text="Hello user")
 
 # home timeline tweets
-for tweet in api.home_timeline():
+# for tweet in api.home_timeline():
+#     print(tweet.text)
+
+# fetching a particular user's tweets
+person = client.get_user(username="TechbroJ").data.id
+for tweet in client.get_users_tweets(person).data:
     print(tweet.text)
