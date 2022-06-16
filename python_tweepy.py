@@ -7,19 +7,6 @@ access_token = config("ACCESS_TOKEN")
 access_token_secret = config("ACCESS_SECRET")
 bearer_token = config("BEARER_TOKEN")
 
-# Authenticate to twitter
-# auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-# auth.set_access_token(access_token, access_token_secret)
-
-# # create API object
-# api = tweepy.API(auth)
-
-# try:
-#     api.verify_credentials()
-#     print("Authentication Okay")
-# except:
-#     print("Error occured")
-
 client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token, access_token_secret)
 
 # first tweet
@@ -27,3 +14,9 @@ client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token
 
 # like a tweet
 client.like(1537429257869090817)
+
+# retweet tweet
+client.retweet(1537429257869090817)
+
+# reply to a tweet
+client.create_tweet(in_reply_to_tweet_id=1537429257869090817, text="Hello user")
