@@ -23,4 +23,7 @@ bearer_token = config("BEARER_TOKEN")
 client = tweepy.Client(bearer_token, consumer_key, consumer_secret, access_token, access_token_secret)
 
 # first tweet
-client.create_tweet(text="Hello Twitter")
+# client.create_tweet(text="Hello Twitter")
+
+# like a tweet
+client.like(1537429257869090817)
