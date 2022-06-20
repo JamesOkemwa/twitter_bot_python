@@ -35,29 +35,52 @@ api = tweepy.API(auth)
 #     print(tweet.text)
 
 # Retweet bot
-class MyStream(tweepy.StreamingClient):
-    def on_tweet(self, tweet):
-        print(tweet.text)
-        # try:
-        #     client.retweet(tweet.id)
-        # except Exception as error:
-        #     print(error)
+# class MyStream(tweepy.StreamingClient):
+#     def on_tweet(self, tweet):
+#         print(tweet.text)
+#         # try:
+#         #     client.retweet(tweet.id)
+#         # except Exception as error:
+#         #     print(error)
 
-        try:
-            client.like(tweet.id)
-        except Exception as error:
-            print(error)
+#         # try:
+#         #     client.like(tweet.id)
+#         # except Exception as error:
+#         #     print(error)
 
-        time.sleep(1)
+#         # time.sleep(1)
 
 
-my_stream = MyStream(bearer_token=bearer_token)
+# my_stream = MyStream(bearer_token=bearer_token)
 
-my_stream.add_rules(tweepy.StreamRule("#Python OR #programming -is:retweet -is:reply"))
+# my_stream.add_rules(tweepy.StreamRule("#Python OR #programming -is:retweet -is:reply"))
 
-my_stream.filter()
+# my_stream.filter()
 
 # deleting stream rules
-for rule in my_stream.get_rules()[0]:
-    my_stream.delete_rules(rule.id)
+# for rule in my_stream.get_rules()[0]:
+#     my_stream.delete_rules(rule.id)
+
+
+# Auto reply
+message = "Send me a message if you have any questions"
+
+client_id = client.get_me().data.id
+
+start_id = 1
+
+while True:
+    response = client.get_users_mentions(client_id, since_id=start_id)
+
+    if response.data != None:
+        for tweet in response.data:
+            try:
+                print(tweet.text)
+                client.create_tweet(in_reply_to_tweet_id=tweet.id, text=message)
+                start_id = tweet.id
+            except:
+                pass
+    time.sleep(2)
+
+    
 
