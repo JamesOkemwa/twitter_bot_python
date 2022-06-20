@@ -34,27 +34,20 @@ api = tweepy.API(auth)
 # for tweet in client.get_users_tweets(person).data:
 #     print(tweet.text)
 
-# Tweepy stream -> Getting tweets as they're being posted
-search_terms = ["python", "programming", "coding"]
-
+# Retweet bot
 class MyStream(tweepy.StreamingClient):
-    def on_connect(self):
-        """Called after the Streaming API has connected successfully"""
-        print("Connected")
-
     def on_tweet(self, tweet):
-        """Called when the API detects a tweet that meets the criteria"""
-        if tweet.referenced_tweets == None:
-            print(tweet.text)
+        print(tweet.text)
+        try:
+            client.retweet(tweet.id)
+        except Exception as error:
+            print(error)
 
-            # time.sleep(0.2)
 
+my_stream = MyStream(bearer_token=bearer_token)
 
-stream = MyStream(bearer_token=bearer_token)
+rule = tweepy.StreamRule("(#Python OR # programming) (-is:retweet -is:reply)")
 
-for term in search_terms:
-    stream.add_rules(tweepy.StreamRule(term))
+my_stream.add_rules(rule, dry_run=True)
 
-stream.filter(tweet_fields=["referenced_tweets"])
-
-        
+my_stream.filter()
