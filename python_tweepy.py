@@ -38,16 +38,26 @@ api = tweepy.API(auth)
 class MyStream(tweepy.StreamingClient):
     def on_tweet(self, tweet):
         print(tweet.text)
+        # try:
+        #     client.retweet(tweet.id)
+        # except Exception as error:
+        #     print(error)
+
         try:
-            client.retweet(tweet.id)
+            client.like(tweet.id)
         except Exception as error:
             print(error)
+
+        time.sleep(1)
 
 
 my_stream = MyStream(bearer_token=bearer_token)
 
-rule = tweepy.StreamRule("(#Python OR # programming) (-is:retweet -is:reply)")
-
-my_stream.add_rules(rule, dry_run=True)
+my_stream.add_rules(tweepy.StreamRule("#Python OR #programming -is:retweet -is:reply"))
 
 my_stream.filter()
+
+# deleting stream rules
+for rule in my_stream.get_rules()[0]:
+    my_stream.delete_rules(rule.id)
+
