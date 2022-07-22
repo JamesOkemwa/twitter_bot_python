@@ -1,5 +1,4 @@
 import tweepy
-import time
 from decouple import config 
 
 consumer_key = config("CONSUMER_KEY")
@@ -63,24 +62,24 @@ api = tweepy.API(auth)
 
 
 # Auto reply
-message = "Send me a message if you have any questions"
+# message = "Send me a message if you have any questions"
 
-client_id = client.get_me().data.id
+# client_id = client.get_me().data.id
 
-start_id = 1
+# start_id = 1
 
-while True:
-    response = client.get_users_mentions(client_id, since_id=start_id)
+# while True:
+#     response = client.get_users_mentions(client_id, since_id=start_id)
 
-    if response.data != None:
-        for tweet in response.data:
-            try:
-                print(tweet.text)
-                client.create_tweet(in_reply_to_tweet_id=tweet.id, text=message)
-                start_id = tweet.id
-            except:
-                pass
-    time.sleep(2)
+#     if response.data != None:
+#         for tweet in response.data:
+#             try:
+#                 print(tweet.text)
+#                 client.create_tweet(in_reply_to_tweet_id=tweet.id, text=message)
+#                 start_id = tweet.id
+#             except:
+#                 pass
+#     time.sleep(2)
 
     
 
